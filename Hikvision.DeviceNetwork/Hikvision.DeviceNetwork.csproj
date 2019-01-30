@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>6.0.22</Version>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(SolutionDir)\Dlls\HCCore.dll $(TargetDir)&#xD;&#xA;copy $(SolutionDir)\Dlls\HCNetSDK.dll $(TargetDir)&#xD;&#xA;mkdir $(TargetDir)\HCNetSDKCom&#xD;&#xA;copy $(SolutionDir)\Dlls\HCNetSDKCom\*.dll $(TargetDir)\HCNetSDKCom /Y" />
+  </Target>
+
+</Project>
