@@ -3,16 +3,18 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>6.0.25</Version>
+    <Version>6.0.36</Version>
     <PackageProjectUrl>https://github.com/tianvan/Hikvision</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tianvan/Hikvision</RepositoryUrl>
     <PackageTags>Hikvision</PackageTags>
     <PackageIconUrl>https://us.hikvision.com/sites/all/themes/hikvision_new/logo.png</PackageIconUrl>
     <Authors>Van Tian</Authors>
     <Description>海康威视网络设备SDK</Description>
-    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <TargetsForTfmSpecificContentInPackage>GetDependencies</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
 
-    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);GetDependencies</TargetsForTfmSpecificContentInPackage>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,19 +27,18 @@
   <Target Name="GetDependencies">
     <ItemGroup>
       <TfmSpecificPackageFile Include="$(OutputPath)\HCCore.dll">
-        <PackagePath>build</PackagePath>
+        <PackagePath>runtimes\win-x86\native</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\HCNetSDK.dll">
-        <PackagePath>build</PackagePath>
+        <PackagePath>runtimes\win-x86\native</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\HCNetSDKCom\*.dll">
-        <PackagePath>build\HCNetSDKCom</PackagePath>
+        <PackagePath>runtimes\win-x86\native\HCNetSDKCom</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>
   </Target>
 
-  <Target Name="PostBuild"
-          AfterTargets="PostBuildEvent">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="copy $(SolutionDir)\Dlls\HCCore.dll $(TargetDir)&#xD;&#xA;copy $(SolutionDir)\Dlls\HCNetSDK.dll $(TargetDir)&#xD;&#xA;mkdir $(TargetDir)\HCNetSDKCom&#xD;&#xA;copy $(SolutionDir)\Dlls\HCNetSDKCom\*.dll $(TargetDir)\HCNetSDKCom /Y" />
   </Target>
 
