@@ -1,12 +1,43 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>6.0.22</Version>
+    <Version>6.0.24</Version>
+    <PackageProjectUrl>https://github.com/tianvan/Hikvision</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tianvan/Hikvision</RepositoryUrl>
+    <PackageTags>Hikvision</PackageTags>
+    <PackageIconUrl>https://us.hikvision.com/sites/all/themes/hikvision_new/logo.png</PackageIconUrl>
+    <Authors>Van Tian</Authors>
+    <Description>海康威视网络设备SDK</Description>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);GetDependencies</TargetsForTfmSpecificContentInPackage>
   </PropertyGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <ItemGroup>
+    <Content Include="readme.md">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="GetDependencies">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(OutputPath)\HCCore.dll">
+        <PackagePath>/</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\HCNetSDK.dll">
+        <PackagePath>/</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\HCNetSDKCom\*.dll">
+        <PackagePath>HCNetSDKCom</PackagePath>
+      </TfmSpecificPackageFile>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="PostBuild"
+          AfterTargets="PostBuildEvent">
     <Exec Command="copy $(SolutionDir)\Dlls\HCCore.dll $(TargetDir)&#xD;&#xA;copy $(SolutionDir)\Dlls\HCNetSDK.dll $(TargetDir)&#xD;&#xA;mkdir $(TargetDir)\HCNetSDKCom&#xD;&#xA;copy $(SolutionDir)\Dlls\HCNetSDKCom\*.dll $(TargetDir)\HCNetSDKCom /Y" />
   </Target>
 
