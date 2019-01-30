@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>6.0.24</Version>
+    <Version>6.0.25</Version>
     <PackageProjectUrl>https://github.com/tianvan/Hikvision</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tianvan/Hikvision</RepositoryUrl>
     <PackageTags>Hikvision</PackageTags>
@@ -25,13 +25,13 @@
   <Target Name="GetDependencies">
     <ItemGroup>
       <TfmSpecificPackageFile Include="$(OutputPath)\HCCore.dll">
-        <PackagePath>/</PackagePath>
+        <PackagePath>build</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\HCNetSDK.dll">
-        <PackagePath>/</PackagePath>
+        <PackagePath>build</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\HCNetSDKCom\*.dll">
-        <PackagePath>HCNetSDKCom</PackagePath>
+        <PackagePath>build\HCNetSDKCom</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>
   </Target>
